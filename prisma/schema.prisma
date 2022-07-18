@@ -22,3 +22,10 @@ model Book {
   author    Author?  @relation(fields: [authorId], references: [id])
   authorId  Int?
 }
+
+model User {
+  id        Int      @default(autoincrement()) @id
+  name      String
+  username  String
+  password  String
+}
