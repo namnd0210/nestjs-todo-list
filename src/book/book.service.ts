@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBookDto } from './dto/create-book.dto';
-import { UpdateBookDto } from './dto/update-book.dto';
-import { PrismaService } from './prisma.service';
+import { PrismaService } from '../prisma.service';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
@@ -15,7 +13,15 @@ export class BookService {
   }
 
   findAll() {
-    return this.prisma.book.findMany();
+    return this.prisma.book.findMany({
+      include: {
+        author: {
+          select: {
+            id: false,
+          },
+        },
+      },
+    });
   }
 
   findOne(bookWhereUniqueInput: Prisma.BookWhereUniqueInput) {
