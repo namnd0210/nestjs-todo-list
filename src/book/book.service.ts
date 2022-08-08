@@ -14,13 +14,13 @@ export class BookService {
 
   findAll() {
     return this.prisma.book.findMany({
-      include: {
-        author: {
-          select: {
-            id: false,
-          },
-        },
-      },
+      // include: {
+      //   author: {
+      //     select: {
+      //       id: false,
+      //     },
+      //   },
+      // },
     });
   }
 
