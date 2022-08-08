@@ -16,14 +16,17 @@ export class SampleService {
     data: Sample[];
     total: number;
   }> {
-    const result = await this.prisma.sample.findMany({
-      take: 10,
-      skip: 10 * (page - 1),
-    });
+    const [total, data] = await this.prisma.$transaction([
+      this.prisma.sample.count(),
+      this.prisma.sample.findMany({
+        take: 10,
+        skip: 10 * (page - 1),
+      }),
+    ]);
 
     return {
-      data: result,
-      total: result.length,
+      data,
+      total,
     };
   }
 
